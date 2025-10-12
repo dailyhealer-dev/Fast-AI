@@ -1,0 +1,27 @@
+# --- Core Django + REST ---
+django
+djangorestframework
+django-cors-headers
+djangorestframework-simplejwt
+djoser
+
+# --- Database ---
+psycopg[binary]
+
+# --- Utilities ---
+python-dotenv
+pillow
+
+# --- Documentation ---
+sphinx
+sphinx-rtd-theme
+sphinxcontrib-django
+
+# --- LangChain + IBM Watsonx integration ---
+langchain
+langchain-ibm
+ibm-watsonx-ai
+ibm-cloud-sdk-core
+
+# --- (For local testing) ---
+requests

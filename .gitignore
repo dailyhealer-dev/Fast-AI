@@ -1,0 +1,35 @@
+# =========================================
+# Root .gitignore for FastAI full-stack app
+# =========================================
+
+# Ignore global virtual environments or env files
+venv/
+.env
+.env.*
+
+# IDE / editor folders
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+
+# Docker-related files 
+.dockerignore
+**/Dockerfile.*
+**/docker-compose*.yml
+
+# Node and Python caches
+__pycache__/
+*.pyc
+node_modules/
+
+# Docs build outputs
+docs/_build/

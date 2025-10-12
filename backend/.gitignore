@@ -1,0 +1,89 @@
+# ----------------------------------------
+# Python & Django
+# ----------------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.pyc
+*.pyo
+*.pyd
+*$py.class
+
+# Ignore virtual environments
+venv/
+.env/
+.env.bak/
+*.env
+
+# Django-related files
+db.sqlite3
+media/
+staticfiles/
+static/
+logs/
+*.log
+
+# Local settings
+local_settings.py
+settings_local.py
+
+# Cache files
+*.cache
+*.mo
+*.pot
+*.pyproj
+*.idea/
+*.vscode/
+*.mypy_cache/
+*.pytest_cache/
+*.coverage
+.coverage.*
+htmlcov/
+*.tox/
+*.nox/
+.pytest_cache/
+.cache/
+
+# ----------------------------------------
+# OS-generated files
+# ----------------------------------------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# ----------------------------------------
+# Docker
+# ----------------------------------------
+# Ignore Docker build cache, volumes, etc.
+**/Dockerfile.*
+**/docker-compose*.yml
+.dockerignore
+
+# ----------------------------------------
+# Build & Distribution
+# ----------------------------------------
+build/
+dist/
+*.egg-info/
+.eggs/
+MANIFEST
+*.spec
+
+# ----------------------------------------
+# IDE / Editor settings
+# ----------------------------------------
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# ----------------------------------------
+# Misc
+# ----------------------------------------
+docs/_build/
+src/__pycache__/
+src/venv/
