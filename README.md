@@ -69,3 +69,15 @@ git clone https://github.com/dailyhealer-dev/Fast-AI.git
 | **Database**   | PostgreSQL...                                   |
 | **AI/ML**      | Watsonx.ai Assistant, Watsonx.ai granite model. |
 | **Deployment** | Docker, GitHub Actions (CI/CD)                  |
+
+## Authors
+
+- Assefa Mekonen
+- Ellan Jhonson
+- Toyib Bayo
+
+## License
+
+`MIT License`
+
+`Copyright (c) 2025`
