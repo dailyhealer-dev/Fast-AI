@@ -37,9 +37,10 @@ export interface Conversation {
 }
 
 export interface ChatState {
-  conversation: Conversation | null; // currently selected conversation
-  messages: Message[];               // messages in the current conversation
+  conversations: Conversation[];     
+  conversation: Conversation | null;   // currently selected conversation
+  messages: Message[];
   latestMessage?: { sender: "user" | "assistant"; content: string } | null;
-  loading: boolean;                  // loading state for async operations
-  error: string | null;              // error messages
+  loading: boolean;
+  error: string | null;
 }

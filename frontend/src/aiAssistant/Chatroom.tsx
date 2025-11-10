@@ -1,7 +1,13 @@
 import React from "react";
-import { Box, VStack } from "@chakra-ui/react";
+import { Box, VStack, Text, Table } from "@chakra-ui/react";
 import UserMessage from "./UserMessage";
 import AssistantMessage from "./AssistantMessage";
+
+
+// --- Utility: clean redundant newlines globally ---
+const cleanMarkdownText = (text: string) => {
+  return text.replace(/\n\s*\n/g, "\n\n").trim();
+};
 
 interface ChatroomProps {
   messages: { sender: "user" | "assistant"; content: string }[];
@@ -17,18 +23,20 @@ export const Chatroom: React.FC<ChatroomProps> = ({ messages, height }) => {
       bg="gray.50"
       display="flex"
       flexDirection="column"
-      justifyContent="space-between"
-      className="chat-scroll" flex="1" overflowY="auto" pb={3}
+      overflowY="auto"
+      className="chat-scroll"
     >
       <VStack align="stretch" gap={3}>
-          {messages.map((msg, idx) =>
-            msg.sender === "user" ? (
-              <UserMessage key={idx} message={msg.content} />
-            ) : (
-              <AssistantMessage key={idx} message={msg.content} />
-            )
-          )}
-        </VStack>
+        {messages.map((msg, idx) => {
+          const cleanedContent = cleanMarkdownText(msg.content);
+
+          return msg.sender === "user" ? (
+            <UserMessage key={idx} message={cleanedContent} />
+          ) : (
+            <AssistantMessage key={idx} message={cleanedContent} />
+          );
+        })}
+      </VStack>
     </Box>
   );
 };

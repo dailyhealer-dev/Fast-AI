@@ -9,9 +9,10 @@ import {
 } from "../redux/features/aichat/aichatSlice";
 
 const Home = () => {
+  
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [mainContentHeight, setMainContentHeight] = useState(0);
-  const [conversationId, setConversationId] = useState<number | null>(null);
+  const [conversationId, setConversationId] = useState<number | undefined>(undefined);
   const [messages, setMessages] = useState<
     { sender: "user" | "assistant"; content: string }[]
   >([]);
@@ -22,8 +23,8 @@ const Home = () => {
     (state) => state.aichat.messages
   );
 
-  const NAVBAR_HEIGHT = 80;
-  const MAIN_CONTENT_WIDTH = 600;
+  const NAVBAR_HEIGHT = 61;
+  const MAIN_CONTENT_WIDTH = 900;
 
   // Set chat container height dynamically
   useEffect(() => {
@@ -87,7 +88,11 @@ const Home = () => {
   }, [messages]);
 
   return (
-    <Grid templateColumns="250px 1fr" gap={4} px={4}>
+    <Grid templateColumns="200px 1fr" 
+        // gap={4} px={4} 
+        overflowY='scroll'
+        h={`calc(100vh - ${NAVBAR_HEIGHT}px)`}
+    >
       {/* Sidebar */}
       <GridItem>
         <Sidebar />
@@ -97,7 +102,7 @@ const Home = () => {
       <GridItem justifyContent="center" display="flex">
         <Flex direction="column" h={mainContentHeight} w={MAIN_CONTENT_WIDTH}>
           {/* Chat messages area */}
-          <Box ref={chatContainerRef} flex="1" overflowY="auto">
+          <Box ref={chatContainerRef} flex="1">
             <Chatroom messages={messages} height={mainContentHeight - 70} />
           </Box>
 

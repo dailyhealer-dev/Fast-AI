@@ -3,6 +3,7 @@ import Navbar from "../containers/Navbar";
 import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
 import { checkAuthenticated, loadUser } from "../redux/features/auth/authSlice";
 import { useLocation } from "react-router-dom";
+import { Box } from "@chakra-ui/react";
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useAppDispatch();
@@ -19,10 +20,12 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const isAuthPage = authPages.includes(location.pathname);
 
   return (
-    <div>
+    <Box h="100vh" overflowY="hidden">
       <Navbar />
-      <div className={isAuthPage ? "App" : ""}>{children}</div>
-    </div>
+      <Box className={isAuthPage ? "App" : ""} h={`calc(100vh - 61px)`}>
+        {children}
+      </Box>
+    </Box>
   );
 };
 

@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from users.models import UserAccount
+from django.core.exceptions import ValidationError
 
 # ---- Create a prompt model 
 class Prompt(models.Model):
@@ -47,5 +48,20 @@ class Message(models.Model):
     image = models.ImageField(upload_to='messages/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"{self.sender}: {self.content[:40]}"
+    MAX_MESSAGES_PER_CONVERSATION = 8  # class-level constant
+
+    def clean(self):
+        # Only limit user messages
+        if self.sender.lower() == 'user':
+            user_messages_count = Message.objects.filter(
+                conversation=self.conversation,
+                sender='user'
+            ).count()
+            if user_messages_count >= self.MAX_MESSAGES_PER_CONVERSATION:
+                raise ValidationError(
+                    f"This conversation already has {self.MAX_MESSAGES_PER_CONVERSATION} user messages."
+                )
+
+    def save(self, *args, **kwargs):
+        self.full_clean()  # triggers clean() before saving
+        super().save(*args, **kwargs)

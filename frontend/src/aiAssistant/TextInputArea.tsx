@@ -5,10 +5,10 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppDispatch } from "../redux/app/hooks";
-import { sendMessage } from "../redux/features/aichat/aichatSlice";
+import { sendMessage, createConversation } from "../redux/features/aichat/aichatSlice";
 
 interface TextInputAreaProps {
-  conversationId?: number | null;
+  conversationId?: number; // number or undefined
   onConversationCreated?: (conversation: any) => void;
   onMessageSent?: (message: any) => void;
 }
@@ -20,6 +20,7 @@ export const TextInputArea: React.FC<TextInputAreaProps> = ({
 }) => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [currentConversationId, setCurrentConversationId] = useState<number | undefined>(conversationId);
   const dispatch = useAppDispatch();
 
   const handleSend = async () => {
@@ -31,29 +32,28 @@ export const TextInputArea: React.FC<TextInputAreaProps> = ({
     setLoading(true);
 
     try {
-      // Dispatch sendMessage; if conversationId is undefined, slice will create one
+      let convId = currentConversationId;
+
+      // Create a new conversation if no conversation exists
+      if (!convId) {
+        const newConvAction = await dispatch(createConversation());
+        if (createConversation.fulfilled.match(newConvAction)) {
+          convId = newConvAction.payload.id;
+          setCurrentConversationId(convId);
+          onConversationCreated?.(newConvAction.payload);
+        } else {
+          throw new Error("Failed to create conversation");
+        }
+      }
+
+      // Send message
       const resultAction = await dispatch(
-        sendMessage({
-          content: message,
-          conversationId: conversationId ?? undefined,
-        })
+        sendMessage({ content: message, conversationId: convId ?? undefined })
       );
 
       if (sendMessage.fulfilled.match(resultAction)) {
         setMessage(""); // clear input
         toast.success("Message sent successfully!");
-
-        // If conversation was created in the slice
-        if (
-          !conversationId &&
-          resultAction.meta.arg.conversationId === undefined
-        ) {
-          onConversationCreated?.({
-            id: resultAction.payload.conversation,
-            title: "New Chat",
-          });
-        }
-
         onMessageSent?.(resultAction.payload);
       } else {
         throw new Error(resultAction.error?.message || "Failed to send message");
